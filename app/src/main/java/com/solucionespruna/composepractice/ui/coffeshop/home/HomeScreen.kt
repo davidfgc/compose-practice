@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,6 +37,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.solucionespruna.composepractice.ui.coffeshop.common.IconAccentButton
 import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 
@@ -57,6 +60,7 @@ fun HomeScreen(modifier: Modifier = Modifier, isDark: Boolean = true) {
         .background(Color.White)
         .padding(horizontal = 24.dp)) {
       CoffeeFilters()
+      CoffeeList()
     }
   }
 }
@@ -77,7 +81,16 @@ fun HomeHeader(modifier: Modifier = Modifier) {
         .onSizeChanged { headerSize = it }
         .padding(top = 24.dp, end = 24.dp, bottom = 0.dp, start = 24.dp)) {
       Text(text = "Location", color = MaterialTheme.colorScheme.onTertiary)
-      Text(text = "Bogotá, Colombia", color = MaterialTheme.colorScheme.onTertiary)
+      Row {
+        Text(
+          text = "Bogotá, Colombia",
+          color = MaterialTheme.colorScheme.onTertiary,)
+        Icon(
+          imageVector = Icons.Default.ArrowDropDown,
+          contentDescription = null,
+          tint = Color.White
+        )
+      }
       HomeSearch()
       Promo(Modifier.onSizeChanged { promoSize = it })
     }
@@ -86,9 +99,7 @@ fun HomeHeader(modifier: Modifier = Modifier) {
 
 @Composable
 fun HomeSearch(modifier: Modifier = Modifier) {
-  var searchText by remember {
-    mutableStateOf("")
-  }
+  var searchText by remember { mutableStateOf("") }
 
   Row(
     modifier
@@ -103,16 +114,7 @@ fun HomeSearch(modifier: Modifier = Modifier) {
         placeholder = { Text(text = "Search coffee") },
         onValueChange = { searchText = it},
         leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) })
-      Box(
-        Modifier
-          .clip(RoundedCornerShape(16.dp))
-          .background(MaterialTheme.colorScheme.primary)
-          .padding(16.dp)) {
-          Icon(
-            imageVector = Icons.Default.Menu,
-            contentDescription = null,
-            tint = Color.White)
-      }
+      IconAccentButton(icon = Icons.Default.Menu, padding = 4f)
   }
 }
 
