@@ -9,10 +9,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
@@ -20,10 +23,13 @@ import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 @Composable
 fun CoffeeFilters(modifier: Modifier = Modifier) {
   val filters by remember { mutableStateOf(listOf("All Coffee", "Machiato", "Latte", "Americano")) }
+  var selectedFilterIndex by remember { mutableIntStateOf(0) }
 
   LazyRow(modifier.padding(top = 24.dp, bottom = 16.dp)) {
     items(filters.count()) {
-      CoffeeFilter(text = filters[it])
+      CoffeeFilter(text = filters[it], isSelected = it == selectedFilterIndex) {
+        selectedFilterIndex = it
+      }
     }
   }
 }
@@ -37,23 +43,32 @@ private fun CoffeeFiltersPreview() {
 }
 
 @Composable
-fun CoffeeFilter(text: String, modifier: Modifier = Modifier) {
-  Text(
-    text = text,
-    modifier
-      .padding(end = 16.dp)
-      .clickable { }
-      .clip(RoundedCornerShape(4.dp))
-      .background(MaterialTheme.colorScheme.primary)
-      .padding(horizontal = 8.dp, vertical = 4.dp),
-    color = MaterialTheme.colorScheme.onPrimary
-  )
+fun CoffeeFilter(
+  text: String,
+  isSelected: Boolean,
+  modifier: Modifier = Modifier,
+  onClick: ()->Unit) {
+    val (bgColor, textColor) = when {
+      isSelected -> Pair(MaterialTheme.colorScheme.primary, Color.White)
+      else -> Pair(MaterialTheme.colorScheme.onTertiary, MaterialTheme.colorScheme.tertiary)
+    }
+
+    Text(
+      text = text,
+      modifier
+        .padding(end = 16.dp)
+        .clickable { onClick() }
+        .clip(RoundedCornerShape(4.dp))
+        .background(bgColor)
+        .padding(horizontal = 8.dp, vertical = 4.dp),
+      color = textColor
+    )
 }
 
 @Preview
 @Composable
 private fun CoffeeFilterPreview() {
   ComposePracticeTheme {
-    CoffeeFilter("All Coffee")
+    CoffeeFilter("All Coffee", true) {}
   }
 }
