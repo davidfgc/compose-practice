@@ -40,7 +40,11 @@ import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, isDark: Boolean = true) {
+fun HomeScreen(
+  modifier: Modifier = Modifier,
+  isDark: Boolean = true,
+  onCoffeeClicked: (Int)->Unit
+  ) {
   ChangeStatusBarColor(isDark)
 
   Scaffold(
@@ -62,7 +66,7 @@ fun HomeScreen(modifier: Modifier = Modifier, isDark: Boolean = true) {
           .padding(horizontal = 24.dp)
       ) {
         CoffeeFilters()
-        CoffeeList(Modifier.padding(bottom = 24.dp))
+        CoffeeList(Modifier.padding(bottom = 24.dp), onCoffeeClicked)
       }
     }
   }
@@ -126,7 +130,7 @@ fun HomeSearch(modifier: Modifier = Modifier) {
 private fun HomeScreenPreview() {
   ComposePracticeTheme {
     Surface {
-      HomeScreen()
+      HomeScreen {}
     }
   }
 }

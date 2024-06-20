@@ -1,6 +1,7 @@
 package com.solucionespruna.composepractice.ui.coffeshop.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,7 +38,7 @@ import java.lang.Math.random
 import java.util.Locale
 
 @Composable
-fun CoffeeList(modifier: Modifier = Modifier) {
+fun CoffeeList(modifier: Modifier = Modifier, onCoffeeClicked: (Int) -> Unit) {
   val coffees = (1..10).map {
     CoffeeItem(
       "https://loremflickr.com/320/320/coffee?ramdom$it",
@@ -53,8 +54,10 @@ fun CoffeeList(modifier: Modifier = Modifier) {
     horizontalArrangement = Arrangement.spacedBy(8.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
-    items(coffees.size) {
-      CoffeeItem(coffeeItem = coffees[it])
+    items(coffees.size) { coffeeIndex ->
+      CoffeeItem(coffeeItem = coffees[coffeeIndex]) {
+        onCoffeeClicked(coffeeIndex)
+      }
     }
   }
 }
@@ -63,15 +66,16 @@ fun CoffeeList(modifier: Modifier = Modifier) {
 @Composable
 private fun CoffeeListPreview() {
   ComposePracticeTheme {
-    CoffeeList()
+    CoffeeList {}
   }
 }
 
 @Composable
-fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier) {
+fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: () -> Unit) {
   Column(
     modifier
       .clip(RoundedCornerShape(16.dp))
+      .clickable { onClick() }
       .background(Color.White)
       .padding(8.dp)
   ) {
@@ -141,6 +145,6 @@ private fun CoffeeItemPreview() {
       "Caffe Mocha",
       "Deep Foam",
       4.53f
-    ))
+    )) {}
   }
 }
