@@ -1,6 +1,5 @@
 package com.solucionespruna.composepractice.ui.coffeshop.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -21,8 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,19 +30,16 @@ fun BottomBarMenu(modifier: Modifier = Modifier) {
   val (selectedIndex, setSelectedIndex) = remember { mutableIntStateOf(0) }
 
   Card(
-    modifier = modifier
-      .navigationBarsPadding(),
+    modifier = modifier.navigationBarsPadding(),
     shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
   ) {
     Row(
-        modifier = Modifier
-          .background(Color.White)
-          .fillMaxWidth(),
+      modifier = Modifier.fillMaxWidth(),
       horizontalArrangement = Arrangement.Absolute.SpaceEvenly) {
       BottomBarItem.getItems().mapIndexed { index, item ->
         val tint = when (index) {
           selectedIndex -> MaterialTheme.colorScheme.primary
-          else -> MaterialTheme.colorScheme.onTertiary
+          else -> MaterialTheme.colorScheme.onSurface
         }
         IconButton(onClick = { setSelectedIndex(index) }) {
           Icon(imageVector = item.icon, contentDescription = null, tint = tint)

@@ -9,13 +9,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun IconAccentButton(icon: ImageVector, modifier: Modifier = Modifier, padding: Float) {
+fun IconButtonPrimary(icon: ImageVector, modifier: Modifier = Modifier, padding: Float) {
   IconButton(
     onClick = { /*TODO*/ },
     modifier
@@ -23,6 +22,6 @@ fun IconAccentButton(icon: ImageVector, modifier: Modifier = Modifier, padding: 
       .background(MaterialTheme.colorScheme.primary)
       .padding(Dp(padding))
   ) {
-    Icon(imageVector = icon, contentDescription = null, tint = Color.White)
+    Icon(imageVector = icon, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
   }
 }

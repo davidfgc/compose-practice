@@ -34,7 +34,7 @@ import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.solucionespruna.composepractice.R
-import com.solucionespruna.composepractice.ui.coffeshop.common.IconAccentButton
+import com.solucionespruna.composepractice.ui.coffeshop.common.IconButtonPrimary
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 import java.lang.Math.random
 import java.util.Locale
@@ -53,7 +53,7 @@ fun CoffeeList(modifier: Modifier = Modifier, onCoffeeClicked: (Int) -> Unit) {
   LazyVerticalGrid(
     modifier = modifier.padding(top = 8.dp),
     columns = GridCells.Fixed(2),
-    horizontalArrangement = Arrangement.spacedBy(8.dp),
+    horizontalArrangement = Arrangement.spacedBy(12.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
     items(coffees.size) { coffeeIndex ->
@@ -77,13 +77,12 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: (
   Card(
     modifier = modifier
       .clickable { onClick() },
-    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     shape = RoundedCornerShape(16.dp)
-
   ) {
     Column(
       Modifier
-        .background(Color.White)
+        .background(MaterialTheme.colorScheme.background)
         .padding(8.dp)) {
       Box {
         AsyncImage(
@@ -136,7 +135,7 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: (
         Text(
           text = "$ ${String.format(Locale.US, "%.2f", coffeeItem.price)}",
           style = MaterialTheme.typography.titleMedium)
-        IconAccentButton(icon = Icons.Default.Add, padding = 0f)
+        IconButtonPrimary(icon = Icons.Default.Add, padding = 0f)
       }
     }
   }

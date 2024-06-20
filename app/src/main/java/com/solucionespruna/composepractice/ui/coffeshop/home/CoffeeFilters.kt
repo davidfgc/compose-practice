@@ -56,8 +56,8 @@ fun CoffeeFilter(
   modifier: Modifier = Modifier,
   onClick: ()->Unit) {
     val (bgColor, textColor) = when {
-      isSelected -> Pair(MaterialTheme.colorScheme.primary, Color.White)
-      else -> Pair(MaterialTheme.colorScheme.onTertiary, MaterialTheme.colorScheme.tertiary)
+      isSelected -> Pair(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimary)
+      else -> Pair(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurface)
     }
 
     Text(

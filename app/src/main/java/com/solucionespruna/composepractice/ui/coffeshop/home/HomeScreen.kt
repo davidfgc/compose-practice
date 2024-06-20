@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.solucionespruna.composepractice.ui.coffeshop.common.IconAccentButton
+import com.solucionespruna.composepractice.ui.coffeshop.common.IconButtonPrimary
 import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 
@@ -60,9 +60,9 @@ fun HomeScreen(
       HomeHeader()
       Column(
         Modifier
-          .background(Color.White)
+          .background(MaterialTheme.colorScheme.surfaceVariant)
           .padding(bottom = padding.calculateBottomPadding().minus(Dp(16f)))
-          .background(MaterialTheme.colorScheme.onTertiary)
+          .background(MaterialTheme.colorScheme.background)
           .padding(horizontal = 24.dp)
       ) {
         CoffeeFilters()
@@ -78,7 +78,7 @@ fun HomeHeader(modifier: Modifier = Modifier) {
   var promoSize by remember { mutableStateOf(IntSize.Zero) }
   val density = LocalDensity.current
 
-  Box(modifier.background(MaterialTheme.colorScheme.onTertiary)) {
+  Box(modifier.background(MaterialTheme.colorScheme.background)) {
     Box(modifier = Modifier
       .fillMaxWidth()
       .height(with(density) { (headerSize.height - promoSize.height / 2).toDp() })
@@ -121,7 +121,7 @@ fun HomeSearch(modifier: Modifier = Modifier) {
         placeholder = { Text(text = "Search coffee") },
         onValueChange = { searchText = it},
         leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) })
-      IconAccentButton(icon = Icons.Default.Menu, padding = 4f)
+      IconButtonPrimary(icon = Icons.Default.Menu, padding = 4f)
   }
 }
 
