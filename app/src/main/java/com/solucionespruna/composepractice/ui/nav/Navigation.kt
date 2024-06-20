@@ -1,6 +1,7 @@
 package com.solucionespruna.composepractice.ui.nav
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,7 +18,11 @@ fun Navigation() {
   NavHost(navController = navController, startDestination = NavItem.Welcome.baseRoute) {
     composable(NavItem.Welcome.baseRoute) {
       WelcomeScreen {
-        navController.navigate(NavItem.Home.baseRoute)
+        navController.navigate(NavItem.Home.baseRoute) {
+          popUpTo(NavItem.Welcome.baseRoute) {
+            inclusive = true
+          }
+        }
       }
     }
     composable(NavItem.Home.baseRoute) {
@@ -27,20 +32,22 @@ fun Navigation() {
     }
     composable(NavItem.CoffeeDetail.route, NavItem.CoffeeDetail.arguments) {backStackEntry ->
       val coffeeId = backStackEntry.arguments!!.getInt(NavArg.CoffeeId.key)
-      CoffeeDetail(coffeeId)
+      CoffeeDetail(
+        coffeeId,
+        onUpClick = { navController.popBackStack() }
+      )
     }
   }
 }
 
-sealed class NavItem(val baseRoute: String, val navArgs: List<NavArg> = emptyList()) {
+sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList()) {
   data object Welcome: NavItem("welcome")
   data object Home: NavItem("home")
   data object CoffeeDetail: NavItem("coffee-detail", listOf(NavArg.CoffeeId)) {
     fun createNavRoute(coffeeId: Int) = "$baseRoute/$coffeeId"
   }
 
-  val route =
-    listOf(baseRoute).plus(navArgs.map { "{${it.key}}" }).joinToString("/")
+  val route = listOf(baseRoute).plus(navArgs.map { "{${it.key}}" }).joinToString("/")
   val arguments = navArgs.map { navArgument(it.key) { type = it.type } }
 }
 
