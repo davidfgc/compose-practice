@@ -15,6 +15,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -72,70 +74,75 @@ private fun CoffeeListPreview() {
 
 @Composable
 fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: () -> Unit) {
-  Column(
-    modifier
-      .clip(RoundedCornerShape(16.dp))
-      .clickable { onClick() }
-      .background(Color.White)
-      .padding(8.dp)
+  Card(
+    modifier = modifier
+      .clickable { onClick() },
+    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    shape = RoundedCornerShape(16.dp)
+
   ) {
-    Box {
-      AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-          .data(coffeeItem.imageURL)
-          .build(),
-        contentDescription = null,
-        imageLoader = ImageLoader(LocalContext.current),
-        modifier = Modifier
-          .clip(RoundedCornerShape(16.dp))
-          .fillMaxWidth(),
-        placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
-        contentScale = ContentScale.Crop,
+    Column(
+      Modifier
+        .background(Color.White)
+        .padding(8.dp)) {
+      Box {
+        AsyncImage(
+          model = ImageRequest.Builder(LocalContext.current)
+            .data(coffeeItem.imageURL)
+            .build(),
+          contentDescription = null,
+          imageLoader = ImageLoader(LocalContext.current),
+          modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
+            .fillMaxWidth(),
+          placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+          contentScale = ContentScale.Crop,
+        )
+        Row(
+          Modifier
+            .padding(
+              vertical = 8.dp,
+              horizontal = 16.dp
+            )
+            .align(Alignment.TopEnd),
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+          Icon(
+            modifier = Modifier.size(12.dp),
+            imageVector = Icons.Default.Star,
+            contentDescription = null,
+            tint = Color.Yellow
+          )
+          Text(
+            text = String.format(Locale.US, "%.1f", coffeeItem.rating),
+            style = MaterialTheme.typography.labelMedium,
+            color = Color.Yellow
+          )
+        }
+      }
+      Text(text = coffeeItem.name, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
+      Text(
+        text = coffeeItem.description,
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.tertiary
       )
       Row(
         Modifier
-          .padding(
-            vertical = 8.dp,
-            horizontal = 16.dp
-          )
-          .align(Alignment.TopEnd),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+          .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
       ) {
-        Icon(
-          modifier = Modifier.size(12.dp),
-          imageVector = Icons.Default.Star,
-          contentDescription = null,
-          tint = Color.Yellow
-        )
         Text(
-          text = String.format(Locale.US, "%.1f", coffeeItem.rating),
-          style = MaterialTheme.typography.labelMedium,
-          color = Color.Yellow
-        )
+          text = "$ ${String.format(Locale.US, "%.2f", coffeeItem.price)}",
+          style = MaterialTheme.typography.titleMedium)
+        IconAccentButton(icon = Icons.Default.Add, padding = 0f)
       }
-    }
-    Text(text = coffeeItem.name, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
-    Text(
-      text = coffeeItem.description,
-      style = MaterialTheme.typography.labelMedium,
-      color = MaterialTheme.colorScheme.tertiary
-    )
-    Row(
-      Modifier
-        .fillMaxWidth(),
-      horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically
-    ) {
-      Text(
-        text = "$ ${String.format(Locale.US, "%.2f", coffeeItem.price)}",
-        style = MaterialTheme.typography.titleMedium)
-      IconAccentButton(icon = Icons.Default.Add, padding = 0f)
     }
   }
 }
 
-@Preview
+//@Preview
 @Composable
 private fun CoffeeItemPreview() {
   ComposePracticeTheme {

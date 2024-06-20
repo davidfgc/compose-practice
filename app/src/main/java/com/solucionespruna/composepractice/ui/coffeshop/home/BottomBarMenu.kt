@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,20 +32,24 @@ import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 fun BottomBarMenu(modifier: Modifier = Modifier) {
   val (selectedIndex, setSelectedIndex) = remember { mutableIntStateOf(0) }
 
-  Row(
+  Card(
     modifier = modifier
-      .navigationBarsPadding()
-      .fillMaxWidth()
-      .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-      .background(Color.White),
-    horizontalArrangement = Arrangement.Absolute.SpaceEvenly) {
-    BottomBarItem.getItems().mapIndexed { index, item ->
-      val tint = when (index) {
-        selectedIndex -> MaterialTheme.colorScheme.primary
-        else -> MaterialTheme.colorScheme.onTertiary
-      }
-      IconButton(onClick = { setSelectedIndex(index) }) {
-        Icon(imageVector = item.icon, contentDescription = null, tint = tint)
+      .navigationBarsPadding(),
+    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+  ) {
+    Row(
+        modifier = Modifier
+          .background(Color.White)
+          .fillMaxWidth(),
+      horizontalArrangement = Arrangement.Absolute.SpaceEvenly) {
+      BottomBarItem.getItems().mapIndexed { index, item ->
+        val tint = when (index) {
+          selectedIndex -> MaterialTheme.colorScheme.primary
+          else -> MaterialTheme.colorScheme.onTertiary
+        }
+        IconButton(onClick = { setSelectedIndex(index) }) {
+          Icon(imageVector = item.icon, contentDescription = null, tint = tint)
+        }
       }
     }
   }
