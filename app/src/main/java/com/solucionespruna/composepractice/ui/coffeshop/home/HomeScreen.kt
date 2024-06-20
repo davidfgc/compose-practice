@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -63,8 +62,7 @@ fun HomeScreen(modifier: Modifier = Modifier, isDark: Boolean = true) {
           .padding(horizontal = 24.dp)
       ) {
         CoffeeFilters()
-        CoffeeList()
-        Spacer(modifier = Modifier.background(Color.White).height(padding.calculateBottomPadding()))
+        CoffeeList(Modifier.padding(bottom = 24.dp))
       }
     }
   }

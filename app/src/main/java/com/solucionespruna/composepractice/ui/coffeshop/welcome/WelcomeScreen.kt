@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,23 +30,28 @@ import com.solucionespruna.composepractice.R
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 
 @Composable
-fun WelcomeScreen(modifier: Modifier = Modifier) {
-  Box (
-    modifier
-      .background(Color.Black)
-      .fillMaxSize()
-      .padding(24.dp)) {
-    Image(
-      painter = painterResource(id = R.drawable.welcome_bg),
-      contentDescription = null,
-      modifier = modifier.fillMaxWidth(),
-      contentScale = ContentScale.FillWidth
-    )
-    Column(
-      modifier = Modifier
-        .fillMaxWidth()
-        .align(Alignment.BottomCenter),
-      verticalArrangement = Arrangement.spacedBy(8.dp)) {
+fun WelcomeScreen(
+  modifier: Modifier = Modifier,
+  onGetStartedClicked: () -> Unit
+) {
+  Scaffold { paddingValues ->
+    Box (
+      modifier
+        .background(Color.Black)
+        .fillMaxSize()
+        .padding(paddingValues)
+        .padding(horizontal = 24.dp)) {
+      Image(
+        painter = painterResource(id = R.drawable.welcome_bg),
+        contentDescription = null,
+        modifier = modifier.fillMaxWidth(),
+        contentScale = ContentScale.FillWidth
+      )
+      Column(
+        modifier = Modifier
+          .fillMaxWidth()
+          .align(Alignment.BottomCenter),
+        verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
           text = "Fall in Love with Coffee in Blissful Delight!",
           color = Color.White,
@@ -61,15 +67,16 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
           modifier = Modifier.fillMaxWidth()
         )
         Button(
-          onClick = { /*TODO*/ },
-          modifier =  Modifier
+          onClick = onGetStartedClicked,
+          modifier = Modifier
             .padding(top = 24.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(24.dp))
             .background(MaterialTheme.colorScheme.primary)
         ) {
-            Text("Get Started")
+          Text("Get Started")
         }
+      }
     }
   }
 }
@@ -79,7 +86,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
 private fun WelcomeScreenPreview() {
   ComposePracticeTheme {
     Surface {
-      WelcomeScreen()
+      WelcomeScreen {}
     }
   }
 }

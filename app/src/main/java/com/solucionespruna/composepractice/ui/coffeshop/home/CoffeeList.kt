@@ -37,7 +37,7 @@ import java.lang.Math.random
 import java.util.Locale
 
 @Composable
-fun CoffeeList() {
+fun CoffeeList(modifier: Modifier = Modifier) {
   val coffees = (1..10).map {
     CoffeeItem(
       "https://loremflickr.com/320/320/coffee?ramdom$it",
@@ -48,7 +48,7 @@ fun CoffeeList() {
   }
 
   LazyVerticalGrid(
-    modifier = Modifier.padding(top = 8.dp),
+    modifier = modifier.padding(top = 8.dp),
     columns = GridCells.Fixed(2),
     horizontalArrangement = Arrangement.spacedBy(8.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp)
