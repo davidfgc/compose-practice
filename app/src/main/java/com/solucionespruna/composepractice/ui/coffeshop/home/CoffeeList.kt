@@ -1,5 +1,6 @@
 package com.solucionespruna.composepractice.ui.coffeshop.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,10 +48,10 @@ fun CoffeeList() {
   }
 
   LazyVerticalGrid(
-    modifier = Modifier.padding(vertical = 8.dp),
+    modifier = Modifier.padding(top = 8.dp),
     columns = GridCells.Fixed(2),
     horizontalArrangement = Arrangement.spacedBy(8.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
+    verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
     items(coffees.size) {
       CoffeeItem(coffeeItem = coffees[it])
@@ -70,20 +71,22 @@ private fun CoffeeListPreview() {
 fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier) {
   Column(
     modifier
-      .clip(RoundedCornerShape(10.dp))
+      .clip(RoundedCornerShape(16.dp))
+      .background(Color.White)
+      .padding(8.dp)
   ) {
     Box {
       AsyncImage(
-        modifier = Modifier
-          .clip(RoundedCornerShape(8.dp))
-          .fillMaxWidth(),
         model = ImageRequest.Builder(LocalContext.current)
           .data(coffeeItem.imageURL)
           .build(),
-        contentScale = ContentScale.Crop,
         contentDescription = null,
-        placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
         imageLoader = ImageLoader(LocalContext.current),
+        modifier = Modifier
+          .clip(RoundedCornerShape(16.dp))
+          .fillMaxWidth(),
+        placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+        contentScale = ContentScale.Crop,
       )
       Row(
         Modifier
@@ -104,16 +107,19 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier) {
         Text(
           text = String.format(Locale.US, "%.1f", coffeeItem.rating),
           style = MaterialTheme.typography.labelMedium,
-          color = Color.White
+          color = Color.Yellow
         )
       }
     }
     Text(text = coffeeItem.name, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
-    Text(text = coffeeItem.description, style = MaterialTheme.typography.labelMedium, color = Color.LightGray)
+    Text(
+      text = coffeeItem.description,
+      style = MaterialTheme.typography.labelMedium,
+      color = MaterialTheme.colorScheme.tertiary
+    )
     Row(
       Modifier
-        .fillMaxWidth()
-        .padding(bottom = 8.dp),
+        .fillMaxWidth(),
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
@@ -125,10 +131,16 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier) {
   }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun CoffeeItemPreview() {
   ComposePracticeTheme {
-    CoffeeItem(CoffeeItem("https://loremflickr.com/320/320/coffee", 4.8f, "Caffe Mocha", "Deep Foam", 4.53f))
+    CoffeeItem(CoffeeItem(
+      "https://loremflickr.com/320/320/coffee",
+      4.8f,
+      "Caffe Mocha",
+      "Deep Foam",
+      4.53f
+    ))
   }
 }

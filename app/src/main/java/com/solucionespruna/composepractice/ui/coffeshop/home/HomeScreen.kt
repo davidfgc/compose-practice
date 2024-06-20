@@ -5,21 +5,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -35,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.solucionespruna.composepractice.ui.coffeshop.common.IconAccentButton
@@ -44,23 +43,29 @@ import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, isDark: Boolean = true) {
   ChangeStatusBarColor(isDark)
-  Column(
-    modifier
-      .fillMaxSize()
-      .background(MaterialTheme.colorScheme.tertiary)
-      .padding(
-        top = WindowInsets.safeContent
-          .asPaddingValues()
-          .calculateTopPadding()
-      )) {
-    HomeHeader()
+
+  Scaffold(
+    bottomBar = { BottomBarMenu() }
+  ) { padding ->
     Column(
-      Modifier
-        .weight(1f)
-        .background(Color.White)
-        .padding(horizontal = 24.dp)) {
-      CoffeeFilters()
-      CoffeeList()
+      modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.tertiary)
+        .padding(top = padding.calculateTopPadding())
+        .background(MaterialTheme.colorScheme.onTertiary)
+    ) {
+      HomeHeader()
+      Column(
+        Modifier
+          .background(Color.White)
+          .padding(bottom = padding.calculateBottomPadding().minus(Dp(16f)))
+          .background(MaterialTheme.colorScheme.onTertiary)
+          .padding(horizontal = 24.dp)
+      ) {
+        CoffeeFilters()
+        CoffeeList()
+        Spacer(modifier = Modifier.background(Color.White).height(padding.calculateBottomPadding()))
+      }
     }
   }
 }
@@ -71,7 +76,7 @@ fun HomeHeader(modifier: Modifier = Modifier) {
   var promoSize by remember { mutableStateOf(IntSize.Zero) }
   val density = LocalDensity.current
 
-  Box(modifier.background(Color.White)) {
+  Box(modifier.background(MaterialTheme.colorScheme.onTertiary)) {
     Box(modifier = Modifier
       .fillMaxWidth()
       .height(with(density) { (headerSize.height - promoSize.height / 2).toDp() })
