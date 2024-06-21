@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.solucionespruna.composepractice.ComposePracticeApp
 import com.solucionespruna.composepractice.ui.coffeshop.common.IconButtonPrimary
 import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
@@ -49,12 +51,43 @@ fun HomeScreen(
   isDark: Boolean = true,
   onCoffeeClicked: (Int) -> Unit
 ) {
-  val coffees by homeViewModel.coffees.collectAsState()
   ChangeStatusBarColor(isDark)
   LaunchedEffect(key1 = Unit) {
     homeViewModel.getCoffees()
   }
 
+  val coffees by homeViewModel.coffees.collectAsState()
+  val uiState by homeViewModel.uiState.collectAsState()
+  when (uiState) {
+    HomeUiState.Loading -> HomeLoading()
+    HomeUiState.Success -> HomeLayout(modifier, coffees, onCoffeeClicked)
+    else -> Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(text = "Not implemented")
+    }
+  }
+}
+
+@Composable
+fun HomeLoading(modifier: Modifier = Modifier) {
+  Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    CircularProgressIndicator()
+  }
+}
+
+@Preview
+@Composable
+private fun HomeLoadingPrev() {
+  ComposePracticeApp {
+    HomeLoading()
+  }
+}
+
+@Composable
+private fun HomeLayout(
+  modifier: Modifier,
+  coffees: List<Coffee>,
+  onCoffeeClicked: (Int) -> Unit
+) {
   Scaffold(
     bottomBar = { BottomBarMenu() }
   ) { padding ->

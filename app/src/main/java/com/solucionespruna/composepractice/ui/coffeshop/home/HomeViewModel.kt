@@ -16,14 +16,29 @@ class HomeViewModel(
   private val coffeesRepository: CoffeesRepository = CoffeesRepositoryImpl()
 ): ViewModel() {
 
+  private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
+  val uiState = _uiState.asStateFlow()
+
   private val _coffees = MutableStateFlow(listOf<Coffee>())
   val coffees: StateFlow<List<Coffee>> = _coffees.asStateFlow()
 
   fun getCoffees() {
     viewModelScope.launch(mainDispatcher) {
+      _uiState.emit(HomeUiState.Loading)
       val res = coffeesRepository.getCoffees()
       _coffees.emit(res)
+      when {
+        res.isEmpty() -> _uiState.emit(HomeUiState.Empty)
+        else -> _uiState.emit(HomeUiState.Success)
+      }
     }
   }
 
+}
+
+sealed class HomeUiState {
+  data object Error: HomeUiState()
+  data object Loading: HomeUiState()
+  data object Empty: HomeUiState()
+  data object Success: HomeUiState()
 }
