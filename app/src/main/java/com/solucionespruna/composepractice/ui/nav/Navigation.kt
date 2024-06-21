@@ -15,7 +15,7 @@ import com.solucionespruna.composepractice.ui.coffeshop.welcome.WelcomeScreen
 fun Navigation() {
   val navController = rememberNavController()
 
-  NavHost(navController = navController, startDestination = NavItem.Welcome.baseRoute) {
+  NavHost(navController = navController, startDestination = NavItem.Home.baseRoute) {
     composable(NavItem.Welcome.baseRoute) {
       WelcomeScreen {
         navController.navigate(NavItem.Home.baseRoute) {

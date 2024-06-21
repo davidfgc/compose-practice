@@ -57,9 +57,8 @@ dependencies {
   implementation(libs.androidx.ui.tooling.preview)
   implementation(libs.androidx.material3)
 
-  val nav_version = "2.7.7"
-  implementation("androidx.navigation:navigation-compose:$nav_version")
-
+  implementation(libs.androidx.lifecycle.viewmodel.compose)
+  implementation(libs.androidx.navigation.compose)
   implementation(libs.coil.compose.base)
 
 

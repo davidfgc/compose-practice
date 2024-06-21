@@ -21,6 +21,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.solucionespruna.composepractice.ui.coffeshop.common.IconButtonPrimary
 import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
@@ -42,10 +45,15 @@ import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
 @Composable
 fun HomeScreen(
   modifier: Modifier = Modifier,
+  homeViewModel: HomeViewModel = viewModel(),
   isDark: Boolean = true,
-  onCoffeeClicked: (Int)->Unit
-  ) {
+  onCoffeeClicked: (Int) -> Unit
+) {
+  val coffees by homeViewModel.coffees.collectAsState()
   ChangeStatusBarColor(isDark)
+  LaunchedEffect(key1 = Unit) {
+    homeViewModel.getCoffees()
+  }
 
   Scaffold(
     bottomBar = { BottomBarMenu() }
@@ -61,12 +69,16 @@ fun HomeScreen(
       Column(
         Modifier
           .background(MaterialTheme.colorScheme.surfaceVariant)
-          .padding(bottom = padding.calculateBottomPadding().minus(Dp(16f)))
+          .padding(
+            bottom = padding
+              .calculateBottomPadding()
+              .minus(Dp(16f))
+          )
           .background(MaterialTheme.colorScheme.background)
           .padding(horizontal = 24.dp)
       ) {
         CoffeeFilters()
-        CoffeeList(Modifier.padding(bottom = 24.dp), onCoffeeClicked)
+        CoffeeList(coffees, Modifier.padding(bottom = 24.dp), onCoffeeClicked)
       }
     }
   }

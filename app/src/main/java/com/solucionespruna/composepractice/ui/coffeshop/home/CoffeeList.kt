@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,16 +41,7 @@ import java.lang.Math.random
 import java.util.Locale
 
 @Composable
-fun CoffeeList(modifier: Modifier = Modifier, onCoffeeClicked: (Int) -> Unit) {
-  val coffees = (1..10).map {
-    CoffeeItem(
-      "https://loremflickr.com/320/320/coffee?ramdom$it",
-      (random() * 10 % 4 + 1).toFloat(),
-      "Caffe Mocha",
-      "Deep Foam", (random() * 10).toFloat()
-    )
-  }
-
+fun CoffeeList(coffees: List<CoffeeItem>, modifier: Modifier = Modifier, onCoffeeClicked: (Int) -> Unit) {
   LazyVerticalGrid(
     modifier = modifier.padding(top = 8.dp),
     columns = GridCells.Fixed(2),
@@ -68,7 +60,7 @@ fun CoffeeList(modifier: Modifier = Modifier, onCoffeeClicked: (Int) -> Unit) {
 @Composable
 private fun CoffeeListPreview() {
   ComposePracticeTheme {
-    CoffeeList {}
+    CoffeeList(emptyList()) {}
   }
 }
 
