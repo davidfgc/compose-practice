@@ -1,6 +1,6 @@
 package com.solucionespruna.composepractice.ui.coffeshop.home
 
-data class CoffeeItem(
+data class Coffee(
   val imageURL: String,
   val rating: Float,
   val name: String,

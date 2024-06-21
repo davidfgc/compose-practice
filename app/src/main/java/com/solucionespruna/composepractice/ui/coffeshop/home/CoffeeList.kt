@@ -21,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,11 +36,10 @@ import coil.request.ImageRequest
 import com.solucionespruna.composepractice.R
 import com.solucionespruna.composepractice.ui.coffeshop.common.IconButtonPrimary
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
-import java.lang.Math.random
 import java.util.Locale
 
 @Composable
-fun CoffeeList(coffees: List<CoffeeItem>, modifier: Modifier = Modifier, onCoffeeClicked: (Int) -> Unit) {
+fun CoffeeList(coffees: List<Coffee>, modifier: Modifier = Modifier, onCoffeeClicked: (Int) -> Unit) {
   LazyVerticalGrid(
     modifier = modifier.padding(top = 8.dp),
     columns = GridCells.Fixed(2),
@@ -49,7 +47,7 @@ fun CoffeeList(coffees: List<CoffeeItem>, modifier: Modifier = Modifier, onCoffe
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
     items(coffees.size) { coffeeIndex ->
-      CoffeeItem(coffeeItem = coffees[coffeeIndex]) {
+      CoffeeItem(coffee = coffees[coffeeIndex]) {
         onCoffeeClicked(coffeeIndex)
       }
     }
@@ -65,7 +63,7 @@ private fun CoffeeListPreview() {
 }
 
 @Composable
-fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun CoffeeItem(coffee: Coffee, modifier: Modifier = Modifier, onClick: () -> Unit) {
   Card(
     modifier = modifier
       .clickable { onClick() },
@@ -79,7 +77,7 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: (
       Box {
         AsyncImage(
           model = ImageRequest.Builder(LocalContext.current)
-            .data(coffeeItem.imageURL)
+            .data(coffee.imageURL)
             .build(),
           contentDescription = null,
           imageLoader = ImageLoader(LocalContext.current),
@@ -106,15 +104,15 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: (
             tint = Color.Yellow
           )
           Text(
-            text = String.format(Locale.US, "%.1f", coffeeItem.rating),
+            text = String.format(Locale.US, "%.1f", coffee.rating),
             style = MaterialTheme.typography.labelMedium,
             color = Color.Yellow
           )
         }
       }
-      Text(text = coffeeItem.name, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
+      Text(text = coffee.name, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
       Text(
-        text = coffeeItem.description,
+        text = coffee.description,
         style = MaterialTheme.typography.labelMedium,
         color = MaterialTheme.colorScheme.tertiary
       )
@@ -125,7 +123,7 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: (
         verticalAlignment = Alignment.CenterVertically
       ) {
         Text(
-          text = "$ ${String.format(Locale.US, "%.2f", coffeeItem.price)}",
+          text = "$ ${String.format(Locale.US, "%.2f", coffee.price)}",
           style = MaterialTheme.typography.titleMedium)
         IconButtonPrimary(icon = Icons.Default.Add, padding = 0f)
       }
@@ -137,7 +135,7 @@ fun CoffeeItem(coffeeItem: CoffeeItem, modifier: Modifier = Modifier, onClick: (
 @Composable
 private fun CoffeeItemPreview() {
   ComposePracticeTheme {
-    CoffeeItem(CoffeeItem(
+    CoffeeItem(Coffee(
       "https://loremflickr.com/320/320/coffee",
       4.8f,
       "Caffe Mocha",
