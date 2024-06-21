@@ -1,15 +1,19 @@
 package com.solucionespruna.composepractice.ui.nav
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.solucionespruna.composepractice.data.coffeshop.CoffeesRepositoryImpl
 import com.solucionespruna.composepractice.ui.coffeshop.coffeedetail.CoffeeDetail
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeScreen
+import com.solucionespruna.composepractice.ui.coffeshop.home.HomeViewModel
 import com.solucionespruna.composepractice.ui.coffeshop.welcome.WelcomeScreen
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun Navigation() {
@@ -26,7 +30,8 @@ fun Navigation() {
       }
     }
     composable(NavItem.Home.baseRoute) {
-      HomeScreen {
+      val homeViewModel = hiltViewModel<HomeViewModel>()
+      HomeScreen(homeViewModel = homeViewModel) {
         navController.navigate(NavItem.CoffeeDetail.createNavRoute(it))
       }
     }

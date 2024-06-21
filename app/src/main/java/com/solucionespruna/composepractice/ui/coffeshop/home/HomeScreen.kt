@@ -40,9 +40,11 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.solucionespruna.composepractice.ComposePracticeApp
+import com.solucionespruna.composepractice.data.coffeshop.CoffeesRepositoryImpl
 import com.solucionespruna.composepractice.ui.coffeshop.common.IconButtonPrimary
 import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
 import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun HomeScreen(
@@ -175,7 +177,7 @@ fun HomeSearch(modifier: Modifier = Modifier) {
 private fun HomeScreenPreview() {
   ComposePracticeTheme {
     Surface {
-      HomeScreen {}
+      HomeScreen(homeViewModel =  HomeViewModel(Dispatchers.Main, CoffeesRepositoryImpl())) {}
     }
   }
 }
