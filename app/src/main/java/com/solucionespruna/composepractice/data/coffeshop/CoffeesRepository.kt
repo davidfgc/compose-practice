@@ -6,14 +6,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 interface CoffeesRepository {
-  suspend fun getCoffees(): List<Coffee>
+  suspend fun getCoffees(): RepositoryResult<List<Coffee>>
 }
 
 class CoffeesRepositoryImpl: CoffeesRepository {
   override suspend fun getCoffees() = withContext(Dispatchers.IO) {
     delay(1000)
 
-    (1..10).map {
+    val coffees = (1..10).map {
       Coffee(
         "https://loremflickr.com/400/400/coffee?random$it",
         (Math.random() * 10 % 4 + 1).toFloat(),
@@ -21,5 +21,10 @@ class CoffeesRepositoryImpl: CoffeesRepository {
         "Deep Foam", (Math.random() * 10).toFloat()
       )
     }
+    RepositoryResult.Success(coffees)
   }
+}
+
+sealed class RepositoryResult<T> {
+  data class Success<T>(val data: T): RepositoryResult<T>()
 }

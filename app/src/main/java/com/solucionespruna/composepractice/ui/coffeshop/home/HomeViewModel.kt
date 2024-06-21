@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.solucionespruna.composepractice.data.coffeshop.CoffeesRepository
 import com.solucionespruna.composepractice.data.coffeshop.CoffeesRepositoryImpl
+import com.solucionespruna.composepractice.data.coffeshop.RepositoryResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,11 +26,14 @@ class HomeViewModel(
   fun getCoffees() {
     viewModelScope.launch(mainDispatcher) {
       _uiState.emit(HomeUiState.Loading)
-      val res = coffeesRepository.getCoffees()
-      _coffees.emit(res)
-      when {
-        res.isEmpty() -> _uiState.emit(HomeUiState.Empty)
-        else -> _uiState.emit(HomeUiState.Success)
+      when (val res = coffeesRepository.getCoffees()) {
+        is RepositoryResult.Success -> {
+          _coffees.emit(res.data)
+          _uiState.value = run {
+            if (res.data.isEmpty()) HomeUiState.Empty
+            else HomeUiState.Success
+          }
+        }
       }
     }
   }
