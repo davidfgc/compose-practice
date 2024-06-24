@@ -3,11 +3,7 @@ package com.solucionespruna.composepractice.ui.coffeshop.coffeedetail
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -16,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.solucionespruna.composepractice.ComposePracticeApp
+import com.solucionespruna.composepractice.ui.common.NavigationIcon
 import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,11 +23,7 @@ fun CoffeeDetail(coffeeId: Int, onUpClick: () -> Unit, modifier: Modifier = Modi
     topBar = {
       TopAppBar(
         title = { Text(text = "Detail") },
-        navigationIcon = {
-          IconButton(onClick = onUpClick) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-          }
-        }
+        navigationIcon = { NavigationIcon(onUpClick) }
       )
     }
   ) {paddingValues ->
