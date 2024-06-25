@@ -18,7 +18,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -35,16 +34,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.solucionespruna.composepractice.ComposePracticeApp
-import com.solucionespruna.composepractice.data.coffeshop.CoffeesRepositoryImpl
 import com.solucionespruna.composepractice.ui.coffeshop.common.IconButtonPrimary
 import com.solucionespruna.composepractice.ui.theme.ChangeStatusBarColor
-import com.solucionespruna.composepractice.ui.theme.ComposePracticeTheme
-import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun HomeScreen(
@@ -62,7 +57,7 @@ fun HomeScreen(
   val uiState by homeViewModel.uiState.collectAsState()
   when (uiState) {
     HomeUiState.Loading -> HomeLoading()
-    HomeUiState.Success -> HomeLayout(modifier, coffees, onCoffeeClicked)
+    HomeUiState.Success -> HomeLayout(coffees, modifier, onCoffeeClicked)
     else -> Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text = "Not implemented")
     }
@@ -86,36 +81,41 @@ private fun HomeLoadingPrev() {
 
 @Composable
 private fun HomeLayout(
-  modifier: Modifier,
   coffees: List<Coffee>,
+  modifier: Modifier = Modifier,
   onCoffeeClicked: (Int) -> Unit
 ) {
   Scaffold(
     bottomBar = { BottomBarMenu() }
-  ) { padding ->
+  ) { paddingValues ->
     Column(
       modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.tertiary)
-        .padding(top = padding.calculateTopPadding())
+        .padding(paddingValues)
         .background(MaterialTheme.colorScheme.onTertiary)
     ) {
       HomeHeader()
       Column(
         Modifier
-          .background(MaterialTheme.colorScheme.surfaceVariant)
-          .padding(
-            bottom = padding
-              .calculateBottomPadding()
-              .minus(Dp(16f))
-          )
           .background(MaterialTheme.colorScheme.background)
           .padding(horizontal = 24.dp)
       ) {
         CoffeeFilters()
-        CoffeeList(coffees, Modifier.padding(bottom = 24.dp), onCoffeeClicked)
+        CoffeeList(coffees) { onCoffeeClicked(it) }
       }
     }
+  }
+}
+
+@Preview
+@Composable
+private fun HomeLayoutPreview() {
+  val coffees = (1..3).map {
+    Coffee("", 5.0f, "Name", "Desc", 4.5f)
+  }
+  ComposePracticeApp {
+    HomeLayout(coffees = coffees) {}
   }
 }
 
@@ -169,15 +169,5 @@ fun HomeSearch(modifier: Modifier = Modifier) {
         onValueChange = { searchText = it},
         leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) })
       IconButtonPrimary(icon = Icons.Default.Menu, padding = 4f)
-  }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun HomeScreenPreview() {
-  ComposePracticeTheme {
-    Surface {
-      HomeScreen(homeViewModel =  HomeViewModel(Dispatchers.Main, CoffeesRepositoryImpl())) {}
-    }
   }
 }

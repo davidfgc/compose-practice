@@ -1,5 +1,7 @@
 package com.solucionespruna.composepractice.ui.coffeshop.home
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -30,11 +32,16 @@ fun BottomBarMenu(modifier: Modifier = Modifier) {
   val (selectedIndex, setSelectedIndex) = remember { mutableIntStateOf(0) }
 
   Card(
-    modifier = modifier.navigationBarsPadding(),
-    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+    modifier = modifier.background(MaterialTheme.colorScheme.background),
+    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+    border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface)
   ) {
     Row(
-      modifier = Modifier.fillMaxWidth(),
+      modifier = Modifier
+        .fillMaxWidth()
+        .background(MaterialTheme.colorScheme.background)
+        .navigationBarsPadding()
+      ,
       horizontalArrangement = Arrangement.Absolute.SpaceEvenly) {
       BottomBarItem.getItems().mapIndexed { index, item ->
         val tint = when (index) {

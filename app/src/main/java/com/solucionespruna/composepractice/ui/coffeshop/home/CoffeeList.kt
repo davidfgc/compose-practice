@@ -44,7 +44,7 @@ fun CoffeeList(coffees: List<Coffee>, modifier: Modifier = Modifier, onCoffeeCli
     modifier = modifier.padding(top = 8.dp),
     columns = GridCells.Fixed(2),
     horizontalArrangement = Arrangement.spacedBy(12.dp),
-    verticalArrangement = Arrangement.spacedBy(16.dp)
+    verticalArrangement = Arrangement.spacedBy(12.dp)
   ) {
     items(coffees.size) { coffeeIndex ->
       CoffeeItem(coffee = coffees[coffeeIndex]) {
@@ -65,8 +65,7 @@ private fun CoffeeListPreview() {
 @Composable
 fun CoffeeItem(coffee: Coffee, modifier: Modifier = Modifier, onClick: () -> Unit) {
   Card(
-    modifier = modifier
-      .clickable { onClick() },
+    modifier = modifier.clickable { onClick() }.padding(bottom = 4.dp),
     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     shape = RoundedCornerShape(16.dp)
   ) {
