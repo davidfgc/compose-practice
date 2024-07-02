@@ -1,5 +1,7 @@
 package com.solucionespruna.composepractice.data.pokedex
 
+import com.solucionespruna.composepractice.model.pokedex.Pokemon
+
 class PokeDexRepositoryImpl(
   private val pokeDexServiceAdapter: PokeDexServiceAdapter = PokeDexServiceAdapterImpl()
 ): PokeDexRepository {

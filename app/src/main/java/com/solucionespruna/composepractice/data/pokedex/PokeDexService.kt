@@ -7,4 +7,7 @@ interface PokeDexService {
   suspend fun getPokemonList(): PokemonListResponse
 }
 
-data class PokemonListResponse(val count: Int, val next: String, val previous: String, val results: List<Pokemon>)
+data class PokemonListResponse(
+  val count: Int, val next: String, val previous: String, val results: List<PokemonResponse>)
+
+data class PokemonResponse(val name: String, val url: String)

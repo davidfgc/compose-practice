@@ -2,14 +2,14 @@ package com.solucionespruna.composepractice.ui.pokedex
 
 import com.solucionespruna.composepractice.data.pokedex.PokeDexAdapterSuccessStub
 import com.solucionespruna.composepractice.data.pokedex.PokeDexRepository
-import com.solucionespruna.composepractice.data.pokedex.Pokemon
+import com.solucionespruna.composepractice.data.pokedex.PokemonResponse
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class PokemonListViewModelTest {
+class PokemonResponseListViewModelTest {
 
   private val testDispatcher = UnconfinedTestDispatcher()
 
@@ -32,7 +32,7 @@ class PokemonListViewModelTest {
 }
 
 class PokeDexRepositorySuccessStub: PokeDexRepository {
-  override suspend fun getPokemonList(): List<Pokemon> {
+  override suspend fun getPokemonList(): List<PokemonResponse> {
     return PokeDexAdapterSuccessStub().getPokemonListWith()
   }
 }

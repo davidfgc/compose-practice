@@ -17,15 +17,15 @@ class PokeDexRepositoryTest {
 }
 
 class PokeDexAdapterSuccessStub(
-  private val items: List<Pokemon> = getFakePokemonList()
+  private val items: List<PokemonResponse> = getFakePokemonList()
 ): PokeDexServiceAdapter {
 
-  override suspend fun getPokemonListWith(): List<Pokemon> {
+  override suspend fun getPokemonListWith(): List<Any> {
     return items
   }
 
 }
 
 private fun getFakePokemonList(items: Int = 10) = (1..items).map {
-  Pokemon("name $it", "url $it")
+  PokemonResponse("name $it", "url $it")
 }

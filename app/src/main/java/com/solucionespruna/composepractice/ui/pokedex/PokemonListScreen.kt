@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -31,10 +32,9 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.solucionespruna.composepractice.ComposePracticeApp
 import com.solucionespruna.composepractice.R
-import com.solucionespruna.composepractice.data.pokedex.Pokemon
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun PokemonListScreen(viewModel: PokemonListViewModel = viewModel()) {
@@ -47,14 +47,17 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = viewModel()) {
 }
 
 @Composable
-fun PokemonListLayout(pokemonList: List<Pokemon>, modifier: Modifier = Modifier) {
-  LazyVerticalGrid(
-    columns = GridCells.Fixed(2),
-    horizontalArrangement = Arrangement.spacedBy(8.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
-  ) {
-    items(pokemonList.count()) {
-      PokemonCard(pokemon = Pokemon(pokemonList[it].name, ""), color = MaterialTheme.colorScheme.error)
+fun PokemonListLayout(pokemonList: List<PokemonViewModelData>, modifier: Modifier = Modifier) {
+  Box(Modifier.safeContentPadding()) {
+    LazyVerticalGrid(
+      columns = GridCells.Fixed(2),
+      modifier = modifier,
+      horizontalArrangement = Arrangement.spacedBy(8.dp),
+      verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+      items(pokemonList.count()) {
+        PokemonCard(pokemonViewModelData = pokemonList[it], color = MaterialTheme.colorScheme.error)
+      }
     }
   }
 }
@@ -63,7 +66,10 @@ fun PokemonListLayout(pokemonList: List<Pokemon>, modifier: Modifier = Modifier)
 @Composable
 private fun PokemonListLayoutPreview() {
   val pokemonList = (1..10).map {
-    Pokemon("name $it", "url")
+    PokemonViewModelData(
+      id = it.toString(),
+      name = "name $it"
+    )
   }
 
   ComposePracticeApp {
@@ -73,18 +79,18 @@ private fun PokemonListLayoutPreview() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PokemonCard(pokemon: Pokemon, color: Color, modifier: Modifier = Modifier) {
+fun PokemonCard(pokemonViewModelData: PokemonViewModelData, color: Color, modifier: Modifier = Modifier) {
   Card(onClick = { /*TODO*/ }, modifier = modifier) {
     Column(Modifier.background(color)) {
-      Text(text = "#001",
+      Text(text = pokemonViewModelData.id,
         Modifier
           .fillMaxWidth()
           .padding(top = 8.dp, end = 8.dp), textAlign = TextAlign.End)
       Text(
-        text = pokemon.name.capitalize(Locale.current),
+        text = pokemonViewModelData.name.capitalize(Locale.current),
         modifier = Modifier.padding(start = 12.dp),
         color = MaterialTheme.colorScheme.background,
-        style = MaterialTheme.typography.bodyLarge,
+        style = MaterialTheme.typography.headlineSmall,
         fontWeight = FontWeight.Bold
       )
       Box(Modifier.fillMaxWidth()) {

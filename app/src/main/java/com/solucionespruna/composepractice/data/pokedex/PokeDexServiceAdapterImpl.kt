@@ -1,5 +1,6 @@
 package com.solucionespruna.composepractice.data.pokedex
 
+import com.solucionespruna.composepractice.model.pokedex.Pokemon
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -21,7 +22,9 @@ open class PokeDexServiceAdapterImpl: PokeDexServiceAdapter {
 
   override suspend fun getPokemonListWith(): List<Pokemon> {
 
-    return pokemonService.getPokemonList().results
+    return pokemonService.getPokemonList().results.map {
+      PokemonResponseMapper.toPokemon(it)
+    }
   }
 
 }
