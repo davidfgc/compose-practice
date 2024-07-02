@@ -82,6 +82,13 @@ dependencies {
   debugImplementation(libs.androidx.ui.test.manifest)
 }
 
+dependencies {
+  implementation("com.squareup.retrofit2:retrofit:2.11.0")
+  implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+}
+
 kapt {
   correctErrorTypes = true
 }
