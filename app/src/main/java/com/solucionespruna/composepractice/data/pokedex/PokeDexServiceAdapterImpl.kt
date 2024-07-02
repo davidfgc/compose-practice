@@ -3,7 +3,11 @@ package com.solucionespruna.composepractice.data.pokedex
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class PokeDexServiceAdapter {
+interface PokeDexServiceAdapter {
+  suspend fun getPokemonListWith(): List<Pokemon>
+}
+
+open class PokeDexServiceAdapterImpl: PokeDexServiceAdapter {
 
   private val retrofit: Retrofit by lazy {
     Retrofit.Builder()
@@ -15,7 +19,7 @@ class PokeDexServiceAdapter {
     retrofit.create(PokeDexService::class.java)
   }
 
-  suspend fun getPokemonListWith(): List<Pokemon> {
+  override suspend fun getPokemonListWith(): List<Pokemon> {
 
     return pokemonService.getPokemonList().results
   }
