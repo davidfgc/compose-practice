@@ -13,6 +13,7 @@ import com.solucionespruna.composepractice.ui.coffeshop.home.HomeViewModel
 import com.solucionespruna.composepractice.ui.coffeshop.welcome.WelcomeScreen
 import com.solucionespruna.composepractice.ui.index.IndexScreen
 import com.solucionespruna.composepractice.ui.ovelay.WithBoxes
+import com.solucionespruna.composepractice.ui.pokedex.PokemonListScreen
 
 @Composable
 fun Navigation() {
@@ -49,17 +50,23 @@ fun Navigation() {
         navController.popBackStack()
       }
     }
+    composable(NavItem.PokemonList.route) {
+      PokemonListScreen()
+    }
   }
 }
 
 sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList()) {
   data object Index: NavItem("index")
+
   data object Welcome: NavItem("welcome")
   data object Home: NavItem("home")
   data object CoffeeDetail: NavItem("coffee-detail", listOf(NavArg.CoffeeId)) {
     fun createNavRoute(coffeeId: Int) = "$baseRoute/$coffeeId"
   }
   data object Overlay: NavItem("overlay")
+
+  data object PokemonList: NavItem("pokemon-list")
 
   val route = listOf(baseRoute).plus(navArgs.map { "{${it.key}}" }).joinToString("/")
   val arguments = navArgs.map { navArgument(it.key) { type = it.type } }
