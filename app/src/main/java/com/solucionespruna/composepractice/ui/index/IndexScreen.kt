@@ -22,6 +22,7 @@ fun IndexScreen(modifier: Modifier = Modifier, navTo: (String) -> Unit) {
     Column(modifier.padding(paddingValues)) {
       IndexItem("PokeDex", onClicked = { navTo(it) }, destination = NavItem.PokemonList)
       IndexItem("Coffee Shop", onClicked = { navTo(it) }, destination = NavItem.Welcome)
+      IndexItem("Basic Shapes", onClicked = { navTo(it) }, destination = NavItem.BasicShapes)
       IndexItem("Overlay", onClicked = { navTo(it) }, destination = NavItem.Overlay)
     }
   }

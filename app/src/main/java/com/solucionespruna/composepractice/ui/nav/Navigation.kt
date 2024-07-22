@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.solucionespruna.composepractice.ui.canvas.BasicShapesScreen
 import com.solucionespruna.composepractice.ui.coffeshop.coffeedetail.CoffeeDetail
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeScreen
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeViewModel
@@ -24,6 +25,17 @@ fun Navigation() {
     composable(NavItem.Index.route) {
       IndexScreen { navController.navigate(it) }
     }
+
+    composable(NavItem.PokemonList.route) {
+      PokemonListScreen {
+        navController.navigate("${NavItem.PokemonDetail.route}/$it")
+      }
+    }
+    composable("${NavItem.PokemonDetail.route}/{id}") { backStackEntry ->
+      val id = backStackEntry.arguments!!.getString("id")!!.toInt()
+      PokemonScreen(id)
+    }
+
     composable(NavItem.Welcome.route) {
       WelcomeScreen {
         navController.navigate(NavItem.Home.route) {
@@ -46,19 +58,15 @@ fun Navigation() {
         onUpClick = { navController.popBackStack() }
       )
     }
+
+    composable(NavItem.BasicShapes.route) {
+      BasicShapesScreen()
+    }
+
     composable(NavItem.Overlay.route) {
       WithBoxes {
         navController.popBackStack()
       }
-    }
-    composable(NavItem.PokemonList.route) {
-      PokemonListScreen {
-        navController.navigate("${NavItem.PokemonDetail.route}/$it")
-      }
-    }
-    composable("${NavItem.PokemonDetail.route}/{id}") { backStackEntry ->
-      val id = backStackEntry.arguments!!.getString("id")!!.toInt()
-      PokemonScreen(id)
     }
   }
 }
@@ -66,15 +74,18 @@ fun Navigation() {
 sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList()) {
   data object Index: NavItem("index")
 
+  data object PokemonList: NavItem("pokemon-list")
+  data object PokemonDetail: NavItem("pokemon-detail")
+
   data object Welcome: NavItem("welcome")
   data object Home: NavItem("home")
   data object CoffeeDetail: NavItem("coffee-detail", listOf(NavArg.CoffeeId)) {
     fun createNavRoute(coffeeId: Int) = "$baseRoute/$coffeeId"
   }
-  data object Overlay: NavItem("overlay")
 
-  data object PokemonList: NavItem("pokemon-list")
-  data object PokemonDetail: NavItem("pokemon-detail")
+  data object BasicShapes: NavItem("basic-shapes")
+
+  data object Overlay: NavItem("overlay")
 
   val route = listOf(baseRoute).plus(navArgs.map { "{${it.key}}" }).joinToString("/")
   val arguments = navArgs.map { navArgument(it.key) { type = it.type } }
