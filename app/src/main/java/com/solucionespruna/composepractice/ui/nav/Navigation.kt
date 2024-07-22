@@ -13,7 +13,8 @@ import com.solucionespruna.composepractice.ui.coffeshop.home.HomeViewModel
 import com.solucionespruna.composepractice.ui.coffeshop.welcome.WelcomeScreen
 import com.solucionespruna.composepractice.ui.index.IndexScreen
 import com.solucionespruna.composepractice.ui.ovelay.WithBoxes
-import com.solucionespruna.composepractice.ui.pokedex.PokemonListScreen
+import com.solucionespruna.composepractice.ui.pokedex.pokemon.PokemonScreen
+import com.solucionespruna.composepractice.ui.pokedex.pokemonlist.PokemonListScreen
 
 @Composable
 fun Navigation() {
@@ -51,7 +52,13 @@ fun Navigation() {
       }
     }
     composable(NavItem.PokemonList.route) {
-      PokemonListScreen()
+      PokemonListScreen {
+        navController.navigate("${NavItem.PokemonDetail.route}/$it")
+      }
+    }
+    composable("${NavItem.PokemonDetail.route}/{id}") { backStackEntry ->
+      val id = backStackEntry.arguments!!.getString("id")!!.toInt()
+      PokemonScreen(id)
     }
   }
 }
@@ -67,6 +74,7 @@ sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList())
   data object Overlay: NavItem("overlay")
 
   data object PokemonList: NavItem("pokemon-list")
+  data object PokemonDetail: NavItem("pokemon-detail")
 
   val route = listOf(baseRoute).plus(navArgs.map { "{${it.key}}" }).joinToString("/")
   val arguments = navArgs.map { navArgument(it.key) { type = it.type } }

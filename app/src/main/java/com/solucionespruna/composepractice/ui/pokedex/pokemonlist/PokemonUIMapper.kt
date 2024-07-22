@@ -1,11 +1,10 @@
-package com.solucionespruna.composepractice.ui.pokedex
+package com.solucionespruna.composepractice.ui.pokedex.pokemonlist
 
 import com.solucionespruna.composepractice.model.pokedex.Pokemon
-import java.util.Locale
 
 object PokemonUIMapper {
   fun fromPokemon(pokemon: Pokemon) = PokemonViewModelData(
-      id = String.format(Locale.US, "#%03d", pokemon.id),
+      id = pokemon.id,
       name = pokemon.name
     )
 }

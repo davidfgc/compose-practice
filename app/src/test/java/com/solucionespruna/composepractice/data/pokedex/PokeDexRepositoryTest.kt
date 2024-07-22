@@ -1,5 +1,6 @@
 package com.solucionespruna.composepractice.data.pokedex
 
+import com.solucionespruna.composepractice.model.pokedex.Pokemon
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
@@ -17,15 +18,15 @@ class PokeDexRepositoryTest {
 }
 
 class PokeDexAdapterSuccessStub(
-  private val items: List<PokemonResponse> = getFakePokemonList()
+  private val items: List<Pokemon> = getFakePokemonList()
 ): PokeDexServiceAdapter {
 
-  override suspend fun getPokemonListWith(): List<Any> {
+  override suspend fun getPokemonListWith(): List<Pokemon> {
     return items
   }
 
 }
 
 private fun getFakePokemonList(items: Int = 10) = (1..items).map {
-  PokemonResponse("name $it", "url $it")
+  Pokemon(it, "name $it", "url $it")
 }

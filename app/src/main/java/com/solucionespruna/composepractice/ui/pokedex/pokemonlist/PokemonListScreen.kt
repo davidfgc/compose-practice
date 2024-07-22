@@ -1,14 +1,15 @@
-package com.solucionespruna.composepractice.ui.pokedex
+package com.solucionespruna.composepractice.ui.pokedex.pokemonlist
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,17 +38,20 @@ import com.solucionespruna.composepractice.ComposePracticeApp
 import com.solucionespruna.composepractice.R
 
 @Composable
-fun PokemonListScreen(viewModel: PokemonListViewModel = viewModel()) {
+fun PokemonListScreen(
+  viewModel: PokemonListViewModel = viewModel(),
+  onClick: (Int) -> Unit
+) {
   LaunchedEffect(key1 = Unit) {
     viewModel.getPokemonList()
   }
   val pokemonList by viewModel.pokemonList.collectAsState()
 
-  PokemonListLayout(pokemonList = pokemonList)
+  PokemonListLayout(pokemonList = pokemonList, onClick)
 }
 
 @Composable
-fun PokemonListLayout(pokemonList: List<PokemonViewModelData>, modifier: Modifier = Modifier) {
+fun PokemonListLayout(pokemonList: List<PokemonViewModelData>, onClick: (Int) -> Unit, modifier: Modifier = Modifier) {
   Box(Modifier.safeContentPadding()) {
     LazyVerticalGrid(
       columns = GridCells.Fixed(2),
@@ -56,7 +60,7 @@ fun PokemonListLayout(pokemonList: List<PokemonViewModelData>, modifier: Modifie
       verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
       items(pokemonList.count()) {
-        PokemonCard(pokemonViewModelData = pokemonList[it], color = MaterialTheme.colorScheme.error)
+        PokemonCard(pokemonViewModelData = pokemonList[it], color = MaterialTheme.colorScheme.error, onClick)
       }
     }
   }
@@ -67,22 +71,27 @@ fun PokemonListLayout(pokemonList: List<PokemonViewModelData>, modifier: Modifie
 private fun PokemonListLayoutPreview() {
   val pokemonList = (1..10).map {
     PokemonViewModelData(
-      id = it.toString(),
+      id = it,
       name = "name $it"
     )
   }
 
   ComposePracticeApp {
-    PokemonListLayout(pokemonList)
+    PokemonListLayout(pokemonList, onClick = {})
   }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PokemonCard(pokemonViewModelData: PokemonViewModelData, color: Color, modifier: Modifier = Modifier) {
-  Card(onClick = { /*TODO*/ }, modifier = modifier) {
+fun PokemonCard(
+  pokemonViewModelData: PokemonViewModelData,
+  color: Color,
+  onClick: (Int) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Card(onClick = { onClick(pokemonViewModelData.id) }, modifier = modifier) {
     Column(Modifier.background(color)) {
-      Text(text = pokemonViewModelData.id,
+      Text(text = pokemonViewModelData.formattedId,
         Modifier
           .fillMaxWidth()
           .padding(top = 8.dp, end = 8.dp), textAlign = TextAlign.End)
@@ -93,7 +102,8 @@ fun PokemonCard(pokemonViewModelData: PokemonViewModelData, color: Color, modifi
         style = MaterialTheme.typography.headlineSmall,
         fontWeight = FontWeight.Bold
       )
-      Box(Modifier.fillMaxWidth()) {
+      BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val scope = this
         Column(
           Modifier
             .padding(start = 12.dp)
@@ -106,7 +116,7 @@ fun PokemonCard(pokemonViewModelData: PokemonViewModelData, color: Color, modifi
           contentDescription = null,
           Modifier
             .align(Alignment.BottomEnd)
-            .size(85.dp)
+            .width(scope.maxWidth * 0.6f)
         )
       }
     }

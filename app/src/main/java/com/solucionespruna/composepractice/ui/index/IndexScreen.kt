@@ -20,6 +20,7 @@ import com.solucionespruna.composepractice.ui.nav.NavItem
 fun IndexScreen(modifier: Modifier = Modifier, navTo: (String) -> Unit) {
   Scaffold { paddingValues ->
     Column(modifier.padding(paddingValues)) {
+      IndexItem("PokeDex", onClicked = { navTo(it) }, destination = NavItem.PokemonList)
       IndexItem("Coffee Shop", onClicked = { navTo(it) }, destination = NavItem.Welcome)
       IndexItem("Overlay", onClicked = { navTo(it) }, destination = NavItem.Overlay)
     }
@@ -42,6 +43,6 @@ private fun IndexItem(
 @Composable
 private fun IndexScreenPrev() {
   ComposePracticeApp {
-    IndexScreen() {}
+    IndexScreen {}
   }
 }

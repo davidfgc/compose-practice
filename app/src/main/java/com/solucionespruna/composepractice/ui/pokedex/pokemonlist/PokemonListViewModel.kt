@@ -1,4 +1,4 @@
-package com.solucionespruna.composepractice.ui.pokedex
+package com.solucionespruna.composepractice.ui.pokedex.pokemonlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class PokemonListViewModel(
   private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
@@ -39,4 +40,7 @@ sealed class PokemonListUiState {
   data object Empty: PokemonListUiState()
 }
 
-data class PokemonViewModelData(val id: String, val name: String)
+data class PokemonViewModelData(val id: Int, val name: String) {
+  val formattedId: String
+    get() = String.format(Locale.US, "#%03d", id)
+}
