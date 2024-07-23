@@ -3,6 +3,7 @@ package com.solucionespruna.composepractice.ui.theme
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -36,14 +37,20 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+private val DarkColorScheme = darkColorScheme(
+  background = Color.Black,
+  onBackground = Color.LightGray
+)
+
 @Composable
 fun ComposePracticeTheme(
-  darkTheme: Boolean = isSystemInDarkTheme(),
+  darkTheme: Boolean = false,
+//  darkTheme: Boolean = isSystemInDarkTheme(),
   content: @Composable () -> Unit
 ) {
   ChangeStatusBarColor(isDark = darkTheme)
   MaterialTheme(
-    colorScheme = LightColorScheme,
+    colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
     typography = Typography,
     content = content
   )
