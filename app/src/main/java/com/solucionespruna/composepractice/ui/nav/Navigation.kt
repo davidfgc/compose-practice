@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.solucionespruna.composepractice.ui.canvas.TimerScreen
+import com.solucionespruna.composepractice.ui.canvas.ClockScreen
 import com.solucionespruna.composepractice.ui.coffeshop.coffeedetail.CoffeeDetail
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeScreen
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeViewModel
@@ -60,7 +60,8 @@ fun Navigation() {
     }
 
     composable(NavItem.BasicShapes.route) {
-      TimerScreen()
+//      TimerScreen()
+      ClockScreen()
     }
 
     composable(NavItem.Overlay.route) {
