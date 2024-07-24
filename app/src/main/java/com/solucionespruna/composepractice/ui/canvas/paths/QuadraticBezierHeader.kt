@@ -29,7 +29,7 @@ import com.solucionespruna.composepractice.R
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HeaderScreen(modifier: Modifier = Modifier) {
+fun QuadraticBezierHeader(modifier: Modifier = Modifier) {
   val headerColor = Color.Blue
   val contentColor = Color.Green
   val headerHeight = 200.dp
