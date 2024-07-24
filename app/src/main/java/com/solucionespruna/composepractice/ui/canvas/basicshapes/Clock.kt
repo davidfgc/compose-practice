@@ -1,4 +1,4 @@
-package com.solucionespruna.composepractice.ui.canvas
+package com.solucionespruna.composepractice.ui.canvas.basicshapes
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas

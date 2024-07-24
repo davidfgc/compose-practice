@@ -1,4 +1,4 @@
-package com.solucionespruna.composepractice.ui.canvas
+package com.solucionespruna.composepractice.ui.canvas.basicshapes
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
