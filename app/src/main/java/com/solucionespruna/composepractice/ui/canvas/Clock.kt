@@ -1,5 +1,6 @@
 package com.solucionespruna.composepractice.ui.canvas
 
+import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,8 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.withRotation
 import kotlinx.coroutines.delay
 import java.util.Calendar
 import kotlin.math.PI
@@ -50,20 +53,20 @@ fun ClockScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun ClockLayout(hour: Int, minute: Int, second: Int, modifier: Modifier = Modifier) {
-  val markersCount = 4
+  val markersCount = 12
   val clockColor = Color.Black
 
   BoxWithConstraints(modifier.padding(16.dp)) {
     val radius = min(constraints.maxWidth, constraints.maxHeight) / 2
-    val markerLength = radius / 7.5f
+    val markerLength = radius / 10f
     val innerRadius = radius - markerLength
 
     Canvas(modifier = Modifier.fillMaxSize()) {
       rotate(-90f, center) {
         drawCircle(clockColor, style = Stroke(width = 2.dp.toPx()))
-        drawClockLine(hour, 12, radius - 3 * markerLength, clockColor)
-        drawClockLine(minute, 60, radius - 2 * markerLength, clockColor)
-        drawClockLine(second, 60, radius - 2 * markerLength, Color.Red)
+        drawClockLine(hour, 12, radius - 5 * markerLength, clockColor)
+        drawClockLine(minute, 60, radius - 3 * markerLength, clockColor)
+        drawClockLine(second, 60, radius - 3 * markerLength, Color.Red)
         drawCircle(clockColor, radius = radius / 10f)
         drawMarkers(markersCount, radius, innerRadius, clockColor)
       }
@@ -83,7 +86,7 @@ private fun DrawScope.drawClockLine(
     length * cos(angleRad) + center.x,
     length * sin(angleRad) + center.y,
   )
-  drawLine(color, start = center, end = end, strokeWidth = 32f)
+  drawLine(color, start = center, end = end, strokeWidth = 28f)
 }
 
 private fun DrawScope.drawMarkers(
@@ -92,15 +95,44 @@ private fun DrawScope.drawMarkers(
   innerRadius: Float,
   clockColor: Color
 ) {
-  val textRadius = innerRadius - 10f
+  val textSize = 120f
+  val textRadius = radius - textSize
   for (i in 0..<markersCount) {
-    drawMarker(i, markersCount, radius, innerRadius, clockColor)
-    val angle = i * 360f / markersCount
-    val angleRad = angle * PI.toFloat() / 180
-    val end = Offset(
-      textRadius * cos(angleRad) + center.x,
-      textRadius * sin(angleRad) + center.y
-    )
+    if (i % 3 == 0) {
+      drawNumber(i, markersCount, textRadius, textSize)
+    } else {
+      drawMarker(i, markersCount, radius, innerRadius, clockColor)
+    }
+  }
+}
+
+private fun DrawScope.drawNumber(
+  number: Int,
+  markersCount: Int,
+  textRadius: Float,
+  textSize: Float
+) {
+  val angle = number * 360f / markersCount
+  val angleRad = angle * PI.toFloat() / 180
+  val end = Offset(
+    textRadius * cos(angleRad) + center.x,
+    textRadius * sin(angleRad) + center.y
+  )
+  drawContext.canvas.nativeCanvas.apply {
+    // TODO: rotate numbers to normal position, to avoid confusing 6 and 9
+    withRotation(degrees = angle + 90, pivotX = end.x, pivotY = end.y) {
+      val value = if (number == 0) "12" else number.toString()
+      drawText(
+        value,
+        end.x,
+        end.y,
+        Paint().apply {
+          color = android.graphics.Color.BLACK
+          this.textSize = textSize
+          textAlign = Paint.Align.CENTER
+        }
+      )
+    }
   }
 }
 
