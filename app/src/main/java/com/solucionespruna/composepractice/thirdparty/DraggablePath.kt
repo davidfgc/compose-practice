@@ -5,7 +5,6 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.safeGesturesPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +25,10 @@ import kotlin.math.sqrt
 
 private val radius = 15.dp
 
+/*
+* Draggable Path GitHub gist from Philipp Lackner
+* https://gist.github.com/philipplackner/19bae0e5090de55e5e5fbba02ea5da4f
+* */
 @Composable
 fun DraggablePath() {
   BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
