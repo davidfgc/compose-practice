@@ -1,3 +1,7 @@
+# Manually added
+app/google-services.json
+
+# Added on created
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar

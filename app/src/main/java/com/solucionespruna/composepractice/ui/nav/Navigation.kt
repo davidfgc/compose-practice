@@ -7,7 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.solucionespruna.composepractice.ui.canvas.basicshapes.ClockScreen
+import com.solucionespruna.composepractice.thirdparty.DraggablePath
+import com.solucionespruna.composepractice.ui.canvas.basicshapes.TimerScreen
 import com.solucionespruna.composepractice.ui.coffeshop.coffeedetail.CoffeeDetail
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeScreen
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeViewModel
@@ -60,14 +61,18 @@ fun Navigation() {
     }
 
     composable(NavItem.BasicShapes.route) {
-//      TimerScreen()
-      ClockScreen()
+      TimerScreen()
+//      ClockScreen()
     }
 
     composable(NavItem.Overlay.route) {
       WithBoxes {
         navController.popBackStack()
       }
+    }
+
+    composable(NavItem.DraggablePath.route) {
+      DraggablePath()
     }
   }
 }
@@ -87,6 +92,8 @@ sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList())
   data object BasicShapes: NavItem("basic-shapes")
 
   data object Overlay: NavItem("overlay")
+
+  data object DraggablePath: NavItem("draggable-path")
 
   val route = listOf(baseRoute).plus(navArgs.map { "{${it.key}}" }).joinToString("/")
   val arguments = navArgs.map { navArgument(it.key) { type = it.type } }
