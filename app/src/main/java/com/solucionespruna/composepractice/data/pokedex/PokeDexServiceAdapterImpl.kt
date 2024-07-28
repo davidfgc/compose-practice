@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 interface PokeDexServiceAdapter {
-  suspend fun getPokemonListWith(): List<Pokemon>
+  suspend fun getPokemonList(): List<Pokemon>
 }
 
 open class PokeDexServiceAdapterImpl: PokeDexServiceAdapter {
@@ -20,7 +20,7 @@ open class PokeDexServiceAdapterImpl: PokeDexServiceAdapter {
     retrofit.create(PokeDexService::class.java)
   }
 
-  override suspend fun getPokemonListWith(): List<Pokemon> {
+  override suspend fun getPokemonList(): List<Pokemon> {
 
     return pokemonService.getPokemonList().results.map {
       PokemonResponseMapper.toPokemon(it)

@@ -35,6 +35,6 @@ class PokemonResponseListViewModelTest {
 
 class PokeDexRepositorySuccessStub: PokeDexRepository {
   override suspend fun getPokemonList(): List<Pokemon> {
-    return PokeDexAdapterSuccessStub().getPokemonListWith()
+    return PokeDexAdapterSuccessStub().getPokemonList()
   }
 }

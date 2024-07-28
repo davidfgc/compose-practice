@@ -7,7 +7,7 @@ class PokeDexRepositoryImpl(
 ): PokeDexRepository {
 
   override suspend fun getPokemonList(): List<Pokemon> {
-    return pokeDexServiceAdapter.getPokemonListWith()
+    return pokeDexServiceAdapter.getPokemonList()
   }
 
 }

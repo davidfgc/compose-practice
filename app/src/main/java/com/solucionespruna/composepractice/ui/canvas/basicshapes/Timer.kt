@@ -133,7 +133,7 @@ fun Timer(
         topLeft = Offset(
           center.x - radius,
           center.y - radius
-        )
+        ),
       )
       drawCircle(
         archType.background,
@@ -161,16 +161,6 @@ fun Timer(
           strokeWidth = 4f
         )
       }
-    }
-  }
-}
-
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun TimerNormalPreview() {
-  ComposePracticeTheme {
-    Surface {
-      Timer(stepsCount = 60, Modifier.fillMaxSize(), steps = 10)
     }
   }
 }

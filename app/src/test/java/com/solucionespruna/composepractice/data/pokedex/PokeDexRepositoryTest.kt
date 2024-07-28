@@ -21,7 +21,7 @@ class PokeDexAdapterSuccessStub(
   private val items: List<Pokemon> = getFakePokemonList()
 ): PokeDexServiceAdapter {
 
-  override suspend fun getPokemonListWith(): List<Pokemon> {
+  override suspend fun getPokemonList(): List<Pokemon> {
     return items
   }
 
