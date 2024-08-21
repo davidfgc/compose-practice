@@ -25,6 +25,7 @@ fun IndexScreen(modifier: Modifier = Modifier, navTo: (String) -> Unit) {
       IndexItem("Canvas", onClicked = { navTo(it) }, destination = NavItem.BasicShapes)
       IndexItem("Overlay", onClicked = { navTo(it) }, destination = NavItem.Overlay)
       IndexItem("Draggable Path", onClicked = { navTo(it) }, destination = NavItem.DraggablePath)
+      IndexItem("Accessibility", onClicked = { navTo(it) }, destination = NavItem.Accessibility)
     }
   }
 }

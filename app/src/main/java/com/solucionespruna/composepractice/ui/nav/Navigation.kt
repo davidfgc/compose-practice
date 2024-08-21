@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.solucionespruna.composepractice.thirdparty.DraggablePath
+import com.solucionespruna.composepractice.ui.accesibility.AccessibilityScreen
 import com.solucionespruna.composepractice.ui.canvas.basicshapes.TimerScreen
 import com.solucionespruna.composepractice.ui.coffeshop.coffeedetail.CoffeeDetail
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeScreen
@@ -74,6 +75,10 @@ fun Navigation() {
     composable(NavItem.DraggablePath.route) {
       DraggablePath()
     }
+
+    composable(NavItem.Accessibility.route) {
+      AccessibilityScreen()
+    }
   }
 }
 
@@ -94,6 +99,8 @@ sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList())
   data object Overlay: NavItem("overlay")
 
   data object DraggablePath: NavItem("draggable-path")
+
+  data object Accessibility: NavItem("accesibility")
 
   val route = listOf(baseRoute).plus(navArgs.map { "{${it.key}}" }).joinToString("/")
   val arguments = navArgs.map { navArgument(it.key) { type = it.type } }
