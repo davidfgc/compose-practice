@@ -7,10 +7,10 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
-composeBom = "2023.08.00"
+composeBom = "2024.08.00"
 
 coilComposeBase = "2.6.0"
-navigationCompose = "2.7.7"
+navigationCompose = "2.8.0-rc01"
 hiltVersion = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 

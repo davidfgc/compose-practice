@@ -14,6 +14,7 @@ import com.solucionespruna.composepractice.ui.coffeshop.coffeedetail.CoffeeDetai
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeScreen
 import com.solucionespruna.composepractice.ui.coffeshop.home.HomeViewModel
 import com.solucionespruna.composepractice.ui.coffeshop.welcome.WelcomeScreen
+import com.solucionespruna.composepractice.ui.forms.FormsScreen
 import com.solucionespruna.composepractice.ui.index.IndexScreen
 import com.solucionespruna.composepractice.ui.ovelay.WithBoxes
 import com.solucionespruna.composepractice.ui.pokedex.pokemon.PokemonScreen
@@ -76,6 +77,10 @@ fun Navigation() {
       DraggablePath()
     }
 
+    composable(NavItem.Forms.route) {
+      FormsScreen()
+    }
+
     composable(NavItem.Accessibility.route) {
       AccessibilityScreen()
     }
@@ -99,6 +104,8 @@ sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList())
   data object Overlay: NavItem("overlay")
 
   data object DraggablePath: NavItem("draggable-path")
+
+  data object Forms: NavItem("forms")
 
   data object Accessibility: NavItem("accesibility")
 
