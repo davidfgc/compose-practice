@@ -1,16 +1,16 @@
 [versions]
-agp = "8.4.1"
+agp = "8.4.2"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.8.2"
-activityCompose = "1.9.0"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
 composeBom = "2024.08.00"
 
 coilComposeBase = "2.6.0"
-navigationCompose = "2.8.0-rc01"
+navigationCompose = "2.8.0-rc01" # testing issues in zoox rider app
 hiltVersion = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 
